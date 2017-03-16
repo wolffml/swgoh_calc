@@ -19,6 +19,69 @@ populateRaids = function () {
 		}
 	}
 }
+function populateURLParams(){
+//populateURLParams = function () {
+	var v_bd_raid = getParameterByName("bd_raid");
+	if (v_bd_raid != null & v_bd_raid != ""){
+		//Means a url parameter was received with specific data
+		console.log("bd_raid parameter value:" + v_bd_raid);
+		$('#bd_raid').val(v_bd_raid);
+		//Now that the raid has been selected, need to populate the levels drop down
+		bd_raidChange();
+		//See if there is a Level Paramater Supplied
+		var v_bd_level = getParameterByName("bd_level");
+		if (v_bd_level != ""){
+			console.log("bd_level: " + v_bd_level);
+			$('#bd_level').val(v_bd_level);
+			bd_levelChange();
+			//See if there is a phase Parameter
+			var v_bd_phase = getParameterByName("bd_phase");
+			if (v_bd_phase != ""){
+				console.log("bd_phase: " + v_bd_phase);
+				$('#bd_phase').val(v_bd_phase);
+				//If there is a damage amount set, now run the calculate code
+				var v_bd_damage = getParameterByName("bd_damage");
+				if (v_bd_damage != "") {
+					console.log("bd_damage: " + v_bd_damage);
+					$('#bd_damage').val(v_bd_damage);
+					calcPercentDamage();
+				}
+			}
+		}
+	}
+	var v_bp_raid = getParameterByName("bp_raid");
+	if (v_bp_raid != ""){
+		//Means a url parameter was received with specific data
+		console.log("bp_raid parameter value:" + v_bp_raid);
+		$('#bp_raid').val(v_bp_raid);
+		//Now that the raid has been selected, need to populate the levels drop down
+		bp_raidChange();
+		//See if there is a Level Paramater Supplied
+		var v_bp_level = getParameterByName("bp_level");
+		if (v_bp_level != ""){
+			console.log("bp_level: " + v_bp_level);
+			$('#bp_level').val(v_bp_level);
+			bp_levelChange();
+			//See if there is a phase Parameter
+			var v_bp_phase = getParameterByName("bp_phase");
+			if (v_bp_phase != ""){
+				console.log("bp_phase: " + v_bp_phase);
+				$('#bp_phase').val(v_bp_phase);
+				//If there is a damage amount set, now run the calculate code
+				var v_bp_percent = getParameterByName("bp_percent");
+				if (v_bp_percent != "") {
+					console.log("bp_percent: " + v_bp_percent);
+					$('#bp_percent').val(v_bp_percent);
+					calcTotalDamage();
+				}
+			}
+		}
+	}
+	
+	
+	
+}
+
 
 bd_raidChange = function() {
 	//First clear the Options list of entries
@@ -97,8 +160,18 @@ function calcPercentDamage() {
 		//do the math
 		var percentDam = 100 * numberDamage / dmg;
 		var stringPercentDamage = Math.round(100*percentDam)/100 + "%";
-		$("#bd_answer").html(stringPercentDamage);
+		$("#bd_answer").val(stringPercentDamage);
 	}
+	
+	//Now we want to provide a URL for this
+	var pathname = window.location.pathname;
+	pathname += "?bd_raid=" + encodeURIComponent(raidSelection) 
+				+"&bd_level=" + encodeURIComponent(levelSelection) 
+				+ "&bd_phase=" + encodeURIComponent(phaseSelection)
+				+ "&bd_damage=" + encodeURIComponent(txtDamage);
+	console.log(pathname);
+	$('#bd_url').val(pathname);
+	$("#bd_url_div").removeClass('hidden');
 }
 
 
@@ -125,6 +198,23 @@ function calcTotalDamage() {
 		//do the math
 		var totalDam = dmg * numberPercent;
 		var stringTotalDamage = totalDam;
-		$("#bp_answer").html(stringTotalDamage);
+		$("#bp_answer").val(stringTotalDamage);
 	}
+	
+	//Now we want to provide a URL for this
+	var pathname = window.location.pathname;
+	pathname += "?bp_raid=" + encodeURIComponent(raidSelection) 
+				+"&bp_level=" + encodeURIComponent(levelSelection) 
+				+ "&bp_phase=" + encodeURIComponent(phaseSelection)
+				+ "&bp_percent=" + encodeURIComponent(txtPercent);
+	console.log(pathname);
+	$('#bp_url').val(pathname);
+	$("#bp_url_div").removeClass('hidden');
+}
+/* Function to get Parameters and try to populate form values.*/
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }

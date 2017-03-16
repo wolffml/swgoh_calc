@@ -30,20 +30,12 @@
 	//When the Document Successfully loads, these statements execute
 	$(document).ready( function() {
 		console.log("Document Loaded.");
+		$('[data-toggle="tooltip"]').tooltip();
 		populateRaids();
+		populateURLParams();
 		
 	} );
-	
-	//for the datepicker
-	/*
-	$(function() {
-	    $( "#datepicker" ).datepicker();
-	 });
-	*/
 </script>
-
-
-
 
 </head>
 <body>
@@ -63,7 +55,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="http://tiny.cc/swgoheh">Event Hørizøn Guild Rules</a></li>
-            
+            <li><a href="#calModal" data-toggle="modal" data-target="#calModal">EH Calendar</a></li>
             <li><a href="#infoModal" data-toggle="modal" data-target="#infoModal">Other Info</a></li>
           </ul>
         	
@@ -72,9 +64,9 @@
     </nav>
 
 	<div class="wrapper container">
-		<!--  <div class="login" id="username_display"><a href="javascript:login('username_display');">Log In</a></div>-->
 		<div class="page">
 			<div class="panel panel-default">
+				<!-- By Amount Section -->
 				<div class="panel-head">
 					<h2 class="text-left">Calculate By Damage Amount</h2>
 					<h2 class="text-left"> <small>Input Damage and Raid Details to get percent damage in a phase.</small></h2>
@@ -121,19 +113,39 @@
 					  	<div class="form-group">
 						    <label for="bd_answer" class="col-sm-2 control-label">Percent (Calculated)</label>
 						    <div class="col-sm-5">
-						    	<p class=".form-control-static" id="bd_answer">0%</p>
+						    	<!-- <p class=".form-control-static" id="bd_answer">0%</p> -->
+						    	<input class="form-control" type="text" id="bd_answer" readonly value="0%">
 						    </div>
 					  	</div>
 					  	
+					  	<div class="form-group hidden" id="bd_url_div">
+						    <label for="bd_url" class="col-sm-2 control-label">URL</label>
+						    
+						    <div class="col-sm-5">
+						    	<input class="form-control" type="text" id="bd_url" readonly>
+						    	<!-- 
+						    	<button id="bd_copy" type="button" class="btn btn-default" aria-label="Left Align" data-toggle="tooltip" title="Copy">
+								  <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+								</button>
+								 -->
+						    </div>
+				  		</div>
 					</form>
-					<div class="col-sm-5 col-sm-offset-2">
-					  		<button value="Calculate1" onclick="javascript:calcPercentDamage();">Calculate</button>
+					<div class="form-group">
+						<div class="col-sm-5 col-sm-offset-2">
+						  		<button value="Calculate1" onclick="javascript:calcPercentDamage();">Calculate</button>
+						</div>
 					</div>
-					<div class="col-sm-5">
-						<p class="text-warning" id="bd_error"></p>
+					<div class="form-group">
+						<div class="col-sm-5">
+							<p class="text-warning" id="bd_error"></p>
+						</div>
 					</div>
+					
+					
 				</div>
 			</div>
+			<!-- By Percent Section -->
 			<div class="panel panel-default">
 				<div class="panel-head">
 					<h2 class="text-left">Damage By Percent</h2>
@@ -175,10 +187,21 @@
 					  	<div class="form-group">
 						    <label for="bp_answer" class="col-sm-2 control-label">Damage (Calculated)</label>
 						    <div class="col-sm-5">
-						    	<p class=".form-control-static" id="bp_answer">400000</p>
+						    	<input class="form-control" type="text" id="bp_answer" readonly value="0">
 						    </div>
 					  	</div>
-					  	
+					  	<div class="form-group hidden" id="bp_url_div">
+						    <label for="bd_url" class="col-sm-2 control-label">URL</label>
+						    
+						    <div class="col-sm-5">
+						    	<input class="form-control" type="text" id="bp_url" readonly>
+						    	<!-- 
+						    	<button id="bd_copy" type="button" class="btn btn-default" aria-label="Left Align" data-toggle="tooltip" title="Copy">
+								  <span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+								</button>
+								 -->
+						    </div>
+				  		</div>
 					</form>
 					<div class="col-sm-5 col-sm-offset-2">
 					  		<button value="Calculate2" onclick="javascript:calcTotalDamage();">Calculate</button>
@@ -213,7 +236,27 @@
 	      </div>
 	    </div>
 	  </div>
-	</div>	
+	</div>
+	<!-- Calendar Modal -->
+	<div class="modal" id="calModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Calendar (Eastern Time Zone)</h4>
+	      </div>
+	      <div class="modal-body">
+	      		<div class="col-sm-8">
+	      			<p><a target="_blank" href="https://calendar.google.com/calendar/embed?src=ssrgqengipn0cvs636qv5lug5k%40group.calendar.google.com&ctz=America%2FNew_York">Link to full calendar</a>
+	      		</div>
+				<iframe src="https://calendar.google.com/calendar/embed?title=Event%20Horizons%20Calendar&amp;mode=WEEK&amp;height=400&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=ssrgqengipn0cvs636qv5lug5k%40group.calendar.google.com&amp;color=%23711616&amp;ctz=America%2FNew_York" style="border-width:0" width="400" height="400" frameborder="0" scrolling="no"></iframe>	      	
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 </body>
 </html>
