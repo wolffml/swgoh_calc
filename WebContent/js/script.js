@@ -19,6 +19,7 @@ populateRaids = function () {
 		}
 	}
 }
+
 function populateURLParams(){
 //populateURLParams = function () {
 	var v_bd_raid = getParameterByName("bd_raid");
