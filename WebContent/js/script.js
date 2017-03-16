@@ -169,7 +169,7 @@ function calcPercentDamage() {
 	var pathname = $(location).attr('protocol')
 				 + "//"
 				 + $(location).attr('host')
-				 + "/"
+				 //+ "/"
 				 + $(location).attr('pathname');
 	pathname += "?bd_raid=" + encodeURIComponent(raidSelection) 
 				+ "&bd_level=" + encodeURIComponent(levelSelection) 
