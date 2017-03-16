@@ -212,7 +212,7 @@ function calcTotalDamage() {
 	var pathname = $(location).attr('protocol')
 				 + "//"
 				 + $(location).attr('host')
-				 + "/"
+				 //+ "/"
 				 + $(location).attr('pathname');
 	pathname += "?bp_raid=" + encodeURIComponent(raidSelection) 
 				+ "&bp_level=" + encodeURIComponent(levelSelection) 
