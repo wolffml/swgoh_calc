@@ -165,9 +165,14 @@ function calcPercentDamage() {
 	}
 	
 	//Now we want to provide a URL for this
-	var pathname = window.location.pathname;
+	//var pathname = window.location.pathname;
+	var pathname = $(location).attr('protocol')
+				 + "//"
+				 + $(location).attr('host')
+				 + "/"
+				 + $(location).attr('pathname');
 	pathname += "?bd_raid=" + encodeURIComponent(raidSelection) 
-				+"&bd_level=" + encodeURIComponent(levelSelection) 
+				+ "&bd_level=" + encodeURIComponent(levelSelection) 
 				+ "&bd_phase=" + encodeURIComponent(phaseSelection)
 				+ "&bd_damage=" + encodeURIComponent(txtDamage);
 	console.log(pathname);
@@ -175,6 +180,7 @@ function calcPercentDamage() {
 	$("#bd_url_div").removeClass('hidden');
 }
 
+// file:////C:/Users/Matthew/git/swgoh_calc/WebContent/index.html?bd_raid=AAT&bd_level=Heroic&bd_phase=Phase%201&bd_damage=100000
 
 function calcTotalDamage() {
 	//Remove any error message if there is one.
@@ -203,9 +209,13 @@ function calcTotalDamage() {
 	}
 	
 	//Now we want to provide a URL for this
-	var pathname = window.location.pathname;
+	var pathname = $(location).attr('protocol')
+				 + "//"
+				 + $(location).attr('host')
+				 + "/"
+				 + $(location).attr('pathname');
 	pathname += "?bp_raid=" + encodeURIComponent(raidSelection) 
-				+"&bp_level=" + encodeURIComponent(levelSelection) 
+				+ "&bp_level=" + encodeURIComponent(levelSelection) 
 				+ "&bp_phase=" + encodeURIComponent(phaseSelection)
 				+ "&bp_percent=" + encodeURIComponent(txtPercent);
 	console.log(pathname);
