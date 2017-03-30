@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta charset="utf-8">
+<title>RandomNumber Generator</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+	var rndArray;
+	//When the Document Successfully loads, these statements execute
+	$(document).ready( function() {
+		console.log("Document Loaded.");
+		var thisNumber = getRandom(1, 100);
+		console.log("Number: " + thisNumber);
+		
+	} );
+	
+	
+	function randNumbers(tableID){
+		console.log("Loading Random Numbers into table: " + tableID);
+		//Clear all Rows first
+		$("#"+tableID).find("tr:gt(0)").remove();
+		
+		//Initialize variables needed for counting, summing and statistics
+		var intMax = parseInt($("#number_max").val());
+		console.log("Max: " + intMax);
+		var intMin = parseInt($("#number_min").val());
+		console.log("Min: " + intMin);
+		var intCount = parseInt($("#number_count").val());
+		console.log("Count: " + intCount);
+		
+		rndArray = new Array();
+		
+		for (var i=0; i < intCount; i++){
+			var thisNumber;
+			//Loop until unique
+			do{
+				thisNumber = getRandom(intMin, intMax);
+				console.log("Random Number: " + thisNumber);
+			} while (!unique(thisNumber));
+			rndArray[i] = thisNumber;
+		}
+		
+		//Loop through final array and put into talbe.
+		for (var i=0; i < intCount; i++){
+			$("#"+tableID).insertRowWithClass(getDemoStatsRow(i+1, rndArray[i]));
+		}
+	}
+	
+	function getRandom(min, max){
+		//console.log("RND high: " + max);
+		//console.log("RND min: " + min);
+		return Math.floor((Math.random() * max) + min);
+	}
+	
+	function unique(chkNumb){
+		for(var i=0; i< rndArray.length; i++){
+			if (rndArray[i] == chkNumb){
+				console.log("Duplicate: " + rndArray[i]);
+				return false;
+			}
+		}
+		return true;
+	}
+
+	function getDemoStatsRow(column1, column2){
+		var row = new Array();
+		var cell = {
+				clss: "stats_n",
+				text: column1
+		};
+		row.push(cell);
+		var cell2 = {
+				clss: "status_value",
+				text: column2
+		};
+		row.push(cell2);
+		return row;
+	}
+	
+	$.fn.insertRowWithClass = function(data) {
+		var insertString = "<tr>";
+		var item;
+		for (item in data) {
+			insertString += "<td class='" + data[item].clss + "'>" + data[item].text + "</td>";
+		}
+		insertString += "</tr>";
+		$(this).append(insertString);
+	}
+	
+	
+	
+</script>
+</head>
+<body>
+	<h1>Random Number Generator</h1>
+	<div class="wrapper">
+		<div class="page">			
+
+			<div class="requirement">
+				<h3>Random List Input</h3>
+					<label for="number_min">Minimum Number in Selection:</label> 
+					<input name="number_min" id="number_min" type="text" size="10" maxlength="12" value="100000" />
+					<label for="number_min">Maximum Number in Selection:</label>
+					<input name="number_max" id="number_max" type="text" size="10" maxlength="12" value="350000"/>
+					<label for="number_min">How many in list:</label>
+					<input name="number_count" id="number_count" type="text" size="10" maxlength="12" value="10"/>
+					<button value="Enter Stats" onclick="javascript:randNumbers('output_table');">Generate List</button>
+			</div>
+			
+			<div class="requirement>">
+				<h3>Basic Statistics</h3>
+				<table class="requirement_a" id="output_table">
+					<caption>Table of Random Number</caption>
+					<thead>
+						<tr>
+							<th>N</th>
+							<th>Value</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			
+		</div><!-- Page -->
+	</div> <!-- wrapper -->
+</body>
+</html>
