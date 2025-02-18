@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Search Page</title>
+</head>
+<body>
+
+<h1>Boeing Search VPC-SC Demo</h1>
+  <!-- Widget JavaScript bundle -->
+<script src="https://cloud.google.com/ai/gen-app-builder/client?hl=en_US"></script>
+
+    <!-- Search widget element is not visible by default -->
+    <gen-search-widget
+    configId="8ee8ea5c-303d-43ee-9fae-bee6e54a4f26"
+    triggerId="searchWidgetTrigger">
+    </gen-search-widget>
+
+    <!-- Element that opens the widget on click. It does not have to be an input -->
+    <input placeholder="Search here" id="searchWidgetTrigger" />
+</body>
+</html>
